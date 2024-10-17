@@ -1,6 +1,9 @@
 const { withBundleAnalyzer } = require("@next/bundle-analyzer");
 
-const nextConfig = {};
+const nextConfig = {
+  reactStrictMode: true,
+  swcMinify: true,
+};
 
 // Enable the bundle analyzer
 const withBundleAnalyzerConfig = withBundleAnalyzer({
