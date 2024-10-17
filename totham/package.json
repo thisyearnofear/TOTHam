@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "analyze": "ANALYZE=true next build",
+    "build:analyze": "ANALYZE=true next build",
+    "start:prod": "next start -p $PORT"
   },
   "dependencies": {
     "gsap": "^3.12.5",
@@ -16,6 +19,7 @@
     "three": "^0.169.0"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^14.2.15",
     "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",

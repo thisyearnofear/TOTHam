@@ -37,3 +37,7 @@ body {
     text-wrap: balance;
   }
 }
+
+* {
+  box-sizing: border-box;
+}
