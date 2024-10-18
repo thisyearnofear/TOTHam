@@ -1,30 +1,44 @@
 "use client";
 
-import { ThreeScene } from "../components/ThreeScene";
-import styles from "./page.module.css";
+import React from "react";
+import { useThreeScene } from "../hooks/useThreeScene";
 
 export default function Home() {
+  const sceneRef = useThreeScene();
+
   return (
-    <div className={styles.container}>
-      <ThreeScene />
-      <div id="instructions" className={styles.instructions}>
-        <span>^</span>
+    <div className="relative w-full h-screen">
+      {/* THREE.js Scene */}
+      <div id="world" ref={sceneRef}></div>
+
+      {/* Instructions */}
+      <div id="instructions">
+        ^<br />
+        Where da goodies ?
         <br />
-        Where Da Ham?
-        <br />
-        <span className={styles.lightInstructions}>
-          Gib Me
+        <span className="lightInstructions">
+          Gib me
           <br />
-          Da Goodies
+          da ham 🍖
         </span>
       </div>
-      <div id="credits" className={styles.credits}>
+
+      {/* Credits */}
+      <div id="credits">
         <p>
-          <a href="https://warpcast.com/tipothehat" target="blank">
+          <a
+            href="https://warpcast.com/tipothehat"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             @TOTH
           </a>{" "}
-          |
-          <a href="https://warpcast.com/~/channel/tipothehat" target="blank">
+          |{" "}
+          <a
+            href="https://warpcast.com/~/channel/tipothehat"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             /tipothehat
           </a>
         </p>
