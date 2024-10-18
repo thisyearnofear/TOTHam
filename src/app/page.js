@@ -17,9 +17,9 @@ export default function Home() {
         Where da goodies ?
         <br />
         <span className="lightInstructions">
-          Gib me tot-HAM
+          Gib me
           <br />
-          🍖 soon 🧢
+          da ham 🍖
         </span>
       </div>
 
@@ -42,6 +42,17 @@ export default function Home() {
             /tipothehat
           </a>
         </p>
+      </div>
+
+      {/* Audius Embed */}
+      <div id="audius-embed">
+        <iframe
+          src="https://audius.co/embed/track/rE4XN?flavor=compact"
+          width="100%"
+          height="120"
+          allow="encrypted-media"
+          style={{ border: "none" }}
+        ></iframe>
       </div>
     </div>
   );
