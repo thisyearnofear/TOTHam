@@ -3,8 +3,8 @@ import * as THREE from "three";
 import {
   createLights,
   createFloor,
-  createBirds,
-  createSkybox,
+  createFrogs,
+  createBackground,
 } from "../utils/threeUtils";
 
 export function ThreeScene() {
@@ -14,7 +14,7 @@ export function ThreeScene() {
     if (!sceneRef.current) return;
 
     let scene, camera, renderer, container;
-    let birds;
+    let frogs;
     let HEIGHT, WIDTH, windowHalfX, windowHalfY;
     let mousePos = { x: 0, y: 0 };
 
@@ -76,43 +76,43 @@ export function ThreeScene() {
       const userHAngle = Math.min(Math.max(tempHA, -Math.PI / 3), Math.PI / 3);
       const userVAngle = Math.min(Math.max(tempVA, -Math.PI / 3), Math.PI / 3);
 
-      birds[0].look(userHAngle, userVAngle);
+      frogs[0].look(userHAngle, userVAngle);
 
-      // Bird behavior logic
-      if (birds[0].hAngle < -Math.PI / 5 && !birds[1].intervalRunning) {
-        birds[1].lookAway(true);
-        birds[1].intervalRunning = true;
-        birds[1].behaviourInterval = setInterval(() => {
-          birds[1].lookAway(false);
+      // Frog behavior logic
+      if (frogs[0].hAngle < -Math.PI / 5 && !frogs[1].intervalRunning) {
+        frogs[1].lookAway(true);
+        frogs[1].intervalRunning = true;
+        frogs[1].behaviourInterval = setInterval(() => {
+          frogs[1].lookAway(false);
         }, 1500);
-      } else if (birds[0].hAngle > 0 && birds[1].intervalRunning) {
-        birds[1].stare();
-        clearInterval(birds[1].behaviourInterval);
-        birds[1].intervalRunning = false;
-      } else if (birds[0].hAngle > Math.PI / 5 && !birds[2].intervalRunning) {
-        birds[2].lookAway(true);
-        birds[2].intervalRunning = true;
-        birds[2].behaviourInterval = setInterval(() => {
-          birds[2].lookAway(false);
+      } else if (frogs[0].hAngle > 0 && frogs[1].intervalRunning) {
+        frogs[1].stare();
+        clearInterval(frogs[1].behaviourInterval);
+        frogs[1].intervalRunning = false;
+      } else if (frogs[0].hAngle > Math.PI / 5 && !frogs[2].intervalRunning) {
+        frogs[2].lookAway(true);
+        frogs[2].intervalRunning = true;
+        frogs[2].behaviourInterval = setInterval(() => {
+          frogs[2].lookAway(false);
         }, 1500);
-      } else if (birds[0].hAngle < 0 && birds[2].intervalRunning) {
-        birds[2].stare();
-        clearInterval(birds[2].behaviourInterval);
-        birds[2].intervalRunning = false;
+      } else if (frogs[0].hAngle < 0 && frogs[2].intervalRunning) {
+        frogs[2].stare();
+        clearInterval(frogs[2].behaviourInterval);
+        frogs[2].intervalRunning = false;
       }
 
-      birds[1].look(birds[1].shyAngles.h, birds[1].shyAngles.v);
-      birds[1].bodyBird.material.color.setRGB(
-        birds[1].color.r,
-        birds[1].color.g,
-        birds[1].color.b
+      frogs[1].look(frogs[1].shyAngles.h, frogs[1].shyAngles.v);
+      frogs[1].bodyFrog.material.color.setRGB(
+        frogs[1].color.r,
+        frogs[1].color.g,
+        frogs[1].color.b
       );
 
-      birds[2].look(birds[2].shyAngles.h, birds[2].shyAngles.v);
-      birds[2].bodyBird.material.color.setRGB(
-        birds[2].color.r,
-        birds[2].color.g,
-        birds[2].color.b
+      frogs[2].look(frogs[2].shyAngles.h, frogs[2].shyAngles.v);
+      frogs[2].bodyFrog.material.color.setRGB(
+        frogs[2].color.r,
+        frogs[2].color.g,
+        frogs[2].color.b
       );
 
       render();
@@ -126,8 +126,8 @@ export function ThreeScene() {
     init();
     createLights(scene);
     createFloor(scene);
-    createSkybox(scene);
-    birds = createBirds(scene);
+    createBackground(scene);
+    frogs = createFrogs(scene);
     loop();
 
     window.addEventListener("resize", onWindowResize);
@@ -137,7 +137,22 @@ export function ThreeScene() {
     document.addEventListener("touchmove", handleTouchMove);
 
     return () => {
-      // Cleanup code (copy from original useThreeScene.js)
+      window.removeEventListener("resize", onWindowResize);
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("touchstart", handleTouchStart);
+      document.removeEventListener("touchend", handleTouchEnd);
+      document.removeEventListener("touchmove", handleTouchMove);
+
+      // Cleanup Three.js objects
+      scene.traverse((object) => {
+        if (object.geometry) object.geometry.dispose();
+        if (object.material) object.material.dispose();
+      });
+      renderer.dispose();
+
+      if (container && renderer.domElement) {
+        container.removeChild(renderer.domElement);
+      }
     };
   }, []);
 
