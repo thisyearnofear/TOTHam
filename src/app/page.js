@@ -17,9 +17,9 @@ export default function Home() {
         Where da goodies ?
         <br />
         <span className="lightInstructions">
-          Gib me
+          Gib me tot-HAM
           <br />
-          da ham 🍖
+          🍖 soon 🧢
         </span>
       </div>
 
